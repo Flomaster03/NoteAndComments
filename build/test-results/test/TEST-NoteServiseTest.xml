@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NoteServiseTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-06-30T19:06:57" hostname="RABOTA" time="0.002">
+  <properties/>
+  <testcase name="getByID_itIsOK" classname="NoteServiseTest" time="0.0"/>
+  <testcase name="getByID_notListIsDeletedTrue" classname="NoteServiseTest" time="0.0"/>
+  <testcase name="edit_notEditIDNotEquals" classname="NoteServiseTest" time="0.0"/>
+  <testcase name="delete_notDeleteIsDeletedTrue" classname="NoteServiseTest" time="0.0"/>
+  <testcase name="getByID_notListIDNotEquals" classname="NoteServiseTest" time="0.0"/>
+  <testcase name="delete_itIsOK" classname="NoteServiseTest" time="0.001"/>
+  <testcase name="delete_notDeleteIDNotEquals" classname="NoteServiseTest" time="0.0"/>
+  <testcase name="edit_notEditIsDeletedTrue" classname="NoteServiseTest" time="0.0"/>
+  <testcase name="edit_itIsOK" classname="NoteServiseTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

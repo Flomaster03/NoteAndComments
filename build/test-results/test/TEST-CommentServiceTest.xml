@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="CommentServiceTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2022-06-30T19:06:57" hostname="RABOTA" time="0.047">
+  <properties/>
+  <testcase name="getByID_itIsOK" classname="CommentServiceTest" time="0.041"/>
+  <testcase name="edit_notEditIDNotEquals" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="delete_notDeleteIsDeletedTrue" classname="CommentServiceTest" time="0.001"/>
+  <testcase name="restore_notRestoreIDNotEquals" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="restore_itIsOK" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="add_notAddIsDeletedTrue" classname="CommentServiceTest" time="0.001"/>
+  <testcase name="delete_itIsOK" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="getByID_notGetIDNotEquals" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="delete_notDeleteIDNotEquals" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="edit_notEditIsDeletedTrue" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="add_notAddNoteIsDeletedTrue" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="add_notAddIDNotEquals" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="restore_notRestoreIsDeletedFalse" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="edit_itIsOK" classname="CommentServiceTest" time="0.001"/>
+  <testcase name="add_itIsOK" classname="CommentServiceTest" time="0.0"/>
+  <testcase name="getByID_notGetIsDeletedTrue" classname="CommentServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

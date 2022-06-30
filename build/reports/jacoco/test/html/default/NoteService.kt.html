@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoteService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">NoteAndCommentOne</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">NoteService.kt</span></div><h1>NoteService.kt</h1><pre class="source lang-java linenums"><span class="fc" id="L1">class NoteServise : CrudServise&lt;Note&gt; {</span>
+
+<span class="fc" id="L3">    private val noteList = mutableListOf&lt;Note&gt;()</span>
+<span class="fc" id="L4">    private val commentList = mutableListOf&lt;Comment&gt;()</span>
+
+<span class="fc" id="L6">    private var nextNoteID = 1</span>
+<span class="fc" id="L7">    private var nextCommentID = 1</span>
+
+    override fun add(element: Note): Note {
+<span class="fc" id="L10">        val newNote = element.copy(id = nextNoteID++)</span>
+<span class="fc" id="L11">        noteList.add(newNote)</span>
+<span class="fc" id="L12">        return noteList.last()</span>
+    }
+
+    override fun delete(id: Int): Boolean {
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        for ((index, value) in noteList.withIndex()) {</span>
+<span class="fc bfc" id="L17" title="All 4 branches covered.">            if (id == value.id &amp;&amp; !value.isDeleted) {</span>
+<span class="fc" id="L18">                noteList[index] = value.copy(isDeleted = true)</span>
+<span class="fc" id="L19">                return true</span>
+            }
+        }
+<span class="fc" id="L22">        return false</span>
+    }
+
+    override fun edit(element: Note): Boolean {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        for ((index, value) in noteList.withIndex()) {</span>
+<span class="fc bfc" id="L27" title="All 4 branches covered.">            if (element.id == value.id &amp;&amp; !value.isDeleted) {</span>
+<span class="fc" id="L28">                noteList[index] = value.copy(</span>
+<span class="fc" id="L29">                    title = element.title,</span>
+<span class="fc" id="L30">                    text = element.text</span>
+                )
+<span class="fc" id="L32">                return true</span>
+            }
+        }
+<span class="fc" id="L35">        return false</span>
+    }
+
+    override fun getByID(id: Int): Note {
+<span class="fc" id="L39">        val listByID = mutableListOf&lt;Note&gt;()</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (note in noteList) {</span>
+<span class="fc bfc" id="L41" title="All 4 branches covered.">            if (id == note.id &amp;&amp; !note.isDeleted)</span>
+<span class="fc" id="L42">                listByID.add(note)</span>
+        }
+<span class="fc bfc" id="L44" title="All 4 branches covered.">        return if (listByID.isNotEmpty()) listByID.last() else throw CommentExeption(&quot;РџРѕ РґР°РЅРЅРѕРјСѓ ID Р·Р°РїРёСЃРµР№ РЅРµ РЅР°Р№РґРµРЅРѕ&quot;)</span>
+    }
+
+    override fun restore(id: Int): Boolean {
+<span class="nc" id="L48">        throw CommentExeption(&quot;Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ Р·Р°РїРёСЃРµР№ РЅРµРІРѕР·РјРѕР¶РЅРѕ&quot;)</span>
+    }
+
+<span class="fc" id="L51">    inner class CommentService : CrudServise&lt;Comment&gt; {</span>
+
+        override fun add(element: Comment): Comment {
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">            for ((index, value) in noteList.withIndex()) {</span>
+<span class="fc" id="L55">                when {</span>
+<span class="fc bfc" id="L56" title="All 6 branches covered.">                    value.id == element.NoteId &amp;&amp; !value.isDeleted &amp;&amp; !element.isDeleted -&gt; {</span>
+<span class="fc" id="L57">                        val newComment = element.copy(id = nextCommentID++)</span>
+<span class="fc" id="L58">                        commentList.add(newComment)</span>
+<span class="fc" id="L59">                        break</span>
+                    }
+<span class="fc bfc" id="L61" title="All 2 branches covered.">                    index &lt; noteList.size - 1 -&gt; continue</span>
+<span class="fc" id="L62">                    else -&gt; break</span>
+                }
+            }
+<span class="fc bfc" id="L65" title="All 4 branches covered.">            return if (commentList.isNotEmpty()) commentList.last() else throw CommentExeption(&quot;РќРµРІРѕР·РјРѕР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РєРѕРјРјРµРЅС‚Р°СЂРёР№ Рє Р·Р°РјРµС‚РєРµ&quot;)</span>
+        }
+
+        override fun delete(id: Int): Boolean {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            for ((index, value) in commentList.withIndex()) {</span>
+<span class="fc" id="L70">                when {</span>
+<span class="fc bfc" id="L71" title="All 4 branches covered.">                    id != value.id &amp;&amp; (index &lt; commentList.size - 1) -&gt; continue</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">                    id == value.id &amp;&amp; !value.isDeleted -&gt; {</span>
+<span class="fc" id="L73">                        commentList[index] = value.copy(isDeleted = true)</span>
+<span class="fc" id="L74">                        return true</span>
+                    }
+<span class="fc" id="L76">                    else -&gt; throw CommentExeption(&quot;Р­С‚РѕС‚ РєРѕРјРјРµРЅС‚Р°СЂРёР№ СѓР¶Рµ СѓРґР°Р»РµРЅ, СѓРґР°Р»РµРЅРёРµ РЅРµРІРѕР·РјРѕР¶РЅРѕ&quot;)</span>
+                }
+            }
+<span class="nc" id="L79">            return false</span>
+        }
+
+        override fun edit(element: Comment): Boolean {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            for ((index, value) in commentList.withIndex()) {</span>
+<span class="fc" id="L84">                when {</span>
+<span class="fc bfc" id="L85" title="All 4 branches covered.">                    element.id != value.id &amp;&amp; (index &lt; commentList.size - 1) -&gt; continue</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">                    element.id == value.id &amp;&amp; !value.isDeleted -&gt; {</span>
+<span class="fc" id="L87">                        commentList[index] = value.copy(message = element.message)</span>
+<span class="fc" id="L88">                        return true</span>
+                    }
+<span class="fc" id="L90">                    else -&gt; throw CommentExeption(&quot;Р­С‚РѕС‚ РєРѕРјРјРµРЅС‚Р°СЂРёР№ СѓР¶Рµ СѓРґР°Р»РµРЅ,СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РЅРµРІРѕР·РјРѕР¶РЅРѕ&quot;)</span>
+                }
+            }
+<span class="nc" id="L93">            return false</span>
+        }
+
+        override fun getByID(id: Int): Comment {
+<span class="fc" id="L97">            val listByID = mutableListOf&lt;Comment&gt;()</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            for (comment in commentList) {</span>
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">                if (id == comment.id &amp;&amp; !comment.isDeleted)</span>
+<span class="fc" id="L100">                    listByID.add(comment)</span>
+            }
+<span class="fc bfc" id="L102" title="All 4 branches covered.">            return if (listByID.isNotEmpty()) listByID.last() else throw CommentExeption(&quot;РџРѕ РґР°РЅРЅРѕРјСѓ ID РєРѕРјРјРµРЅС‚Р°СЂРёРµРІ РЅРµ РЅР°Р№РґРµРЅРѕ&quot;)</span>
+        }
+
+        override fun restore(id: Int): Boolean {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">            for ((index, value) in commentList.withIndex()) {</span>
+<span class="fc" id="L107">                when {</span>
+<span class="fc bfc" id="L108" title="All 4 branches covered.">                    id != value.id &amp;&amp; (index &lt; commentList.size - 1) -&gt; continue</span>
+<span class="fc bfc" id="L109" title="All 4 branches covered.">                    id == value.id &amp;&amp; value.isDeleted -&gt; {</span>
+<span class="fc" id="L110">                        commentList[index] = value.copy(isDeleted = false)</span>
+<span class="fc" id="L111">                        return true</span>
+                    }
+<span class="fc" id="L113">                    else -&gt; throw CommentExeption(&quot;РќРµРІРѕР·РјРѕР¶РЅРѕ РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РЅРµСѓРґР°Р»РµРЅРЅС‹Р№ РєРѕРјРјРµРЅС‚Р°СЂРёР№&quot;)</span>
+                }
+            }
+<span class="nc" id="L116">            return false</span>
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
